@@ -93,3 +93,27 @@ void GPU::evict(std::size_t slot) {
     slotPrefixes.erase(slot);
     evictions++;
 }
+
+size_t GPU::getBlocksForMemory(size_t memory) const {
+    return (blockSize + memory - 1)/blockSize;
+}
+
+void GPU::acquire(size_t slot) {
+    memory[slot]->acquire();
+}
+
+void GPU::release(size_t slot) {
+    IdleAction action = memory[slot]->release();
+    if (action == IdleAction::KeepCached) {
+        auto it = slotPrefixes.find(slot);
+        if (it == slotPrefixes.end() || it->second.prefixTokens.empty()) {
+            delete memory[slot];
+            memory[slot] = nullptr;
+            slotPrefixes.erase(it);
+        }
+    }
+    else if(action == IdleAction::Destroy) {
+        delete memory[slot];
+        memory[slot] = nullptr;
+    }
+}

@@ -25,13 +25,13 @@ class MemoryBlock;
 class GPU{
 public:
     GPU(std::size_t blocksNum, std::size_t blockSize);
-    std::size_t availableSlots() const;
-    std::size_t getBlocksForMemory(std::size_t memory) const;
-    void reserve(std::size_t n, const Request& request);
-    void unreserve(std::size_t n, const Request& request);
-    std::size_t allocateBlock(const Request& request);
-    void addMemoryBlock(const GenerativeRequest& request, std::size_t slot);
-    void addMemoryBlock(const EmbeddingRequest& request, std::size_t slot);
+    std::size_t availableSlots() const; //V
+    std::size_t getBlocksForMemory(std::size_t memory) const; //V
+    void reserve(std::size_t n, const Request& request); //V
+    void unreserve(std::size_t n, const Request& request); //V
+    std::size_t allocateBlock(const Request& request); //V
+    void addMemoryBlock(const GenerativeRequest& request, std::size_t slot); //V
+    void addMemoryBlock(const EmbeddingRequest& request, std::size_t slot); //V
     void acquire(std::size_t slot);
     void release(std::size_t slot);
     void copyMemoryFromOtherGPU(const GPU& other,const std::vector<std::size_t>& blocks);
