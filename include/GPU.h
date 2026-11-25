@@ -32,10 +32,10 @@ public:
     std::size_t allocateBlock(const Request& request); //V
     void addMemoryBlock(const GenerativeRequest& request, std::size_t slot); //V
     void addMemoryBlock(const EmbeddingRequest& request, std::size_t slot); //V
-    void acquire(std::size_t slot);
-    void release(std::size_t slot);
+    void acquire(std::size_t slot); //V
+    void release(std::size_t slot); //V
     void copyMemoryFromOtherGPU(const GPU& other,const std::vector<std::size_t>& blocks);
-    void assignPrefixToBlock(std::size_t block, const std::vector<std::string>& prefixTokens, const std::string& modelId);
+    void assignPrefixToBlock(std::size_t block, const std::vector<std::string>& prefixTokens, const std::string& modelId); //V
     int readFromBlock(std::size_t blockId, std::size_t offset) const;
     void writeToBlock(std::size_t blockId, std::size_t offset, int value);
     PrefixMatch findLongestCachedPrefix(const std::string& modelId, std::size_t embeddingSize,

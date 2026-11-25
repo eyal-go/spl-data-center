@@ -117,3 +117,8 @@ void GPU::release(size_t slot) {
         memory[slot] = nullptr;
     }
 }
+
+void GPU::assignPrefixToBlock(std::size_t block, const std::vector<std::string>& prefixTokens, const std::string& modelId) {
+    SlotPrefix currentSlotPrefix = {modelId, prefixTokens};
+    slotPrefixes[block] = currentSlotPrefix;
+}
