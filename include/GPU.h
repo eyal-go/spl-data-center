@@ -4,11 +4,21 @@
 #include <string>
 #include <cstddef>
 #include <vector>
+#include "Request.h"
+#include "MemoryBlock.h"
+#include <iostream>
+#include <map>
 
 struct PrefixMatch {
     std::size_t matchedTokens;
     std::vector<std::size_t> blockIds;
 };
+
+struct SlotPrefix {
+    std::string modelId;
+    std::vector<std::string> prefixTokens;
+};
+
 
 class MemoryBlock;
 
@@ -34,6 +44,15 @@ private:
     std::size_t blocksNum;
     std::size_t blockSize;
     std::vector<MemoryBlock*> memory;
+
+    //NEW
+    std::size_t totalReserved;
+    std::map<int, std::size_t> requestReservations;
+    std::size_t cacheHits;
+    std::size_t evictions;
+    std::map<std::size_t, SlotPrefix> slotPrefixes;
+
+    void evict(std::size_t slot);
 };
 
 #endif

@@ -10,6 +10,12 @@ protected:
     size_t size;
     int refCount;
     int* data;
+
+    MemoryBlock(const MemoryBlock& other);
+    MemoryBlock& operator=(const MemoryBlock& other);
+    MemoryBlock(MemoryBlock&& other);
+    MemoryBlock& operator=(MemoryBlock&& other);
+    
 public:
     MemoryBlock(size_t size);
     virtual IdleAction onLastRelease() const = 0;
@@ -18,6 +24,13 @@ public:
     void writeToBlock(std::size_t offset, int value);
     void acquire();
     IdleAction release();
+
+    //New
+    size_t getRefCount() const;
+    
+    //Added for rule of 5
+    virtual ~MemoryBlock();
+
 };
 
 class KVBlock: public MemoryBlock{
